@@ -57,3 +57,85 @@ https://nextjs.org/docs/messages/export-image-api
 
 关闭图片自动优化的官方说明：
 https://nextjs.org/docs/api-reference/next/image#unoptimized
+
+
+### react next 在dev模式下中如何接口请求
+在dev模式下，next会自动启动一个本地的服务，端口号默认是3000。
+可以在next.config.js中配置proxy。
+
+修改next.config.js:
+```
+  const nextConfig = {
++      async rewrites() {
++        return [
++          {
++            source: '/api/:path*',
++            destination: 'http://localhost:8080/api/:path*',
++          },
++        ]
++      },
+  }
+```
+
+修改后，重启项目，就可以在dev模式下请求接口了。
+
+※注： 8080是后端服务的端口号，根据实际情况修改。
+
+
+### getStaticProps函数在dev模式下并不是默认执行的
+
+突然自己就好了;
+
+
+### next build && next export 后，打开项目，再次刷新非index页面后，提示异常 Cannot GET
+dev和ssr模式下, 不会出现这个问题;
+ssg模式下, 生成的都是html页面, 例如demo.html; 
+
+所以访问 http://localhost:3000/demo 时无法准确定位到demo.html所以会提示异常 Cannot GET
+
+手动更改为 http://localhost:3000/demo.html 访问, 可以正常访问;
+
+方法一:   
+可以通过设置trailingSlash: true解决   
+https://nextjs.org/docs/api-reference/next.config.js/exportPathMap#adding-a-trailing-slash
+
+但这样会导致url从 http://localhost:3000/demo 变为 http://localhost:3000/demo/
+
+
+方法二:  
+通过设置nginx.conf配置路由映射, 例如:  
+```
+location /demo {
+  rewrite ^/demo/(.*)$ /demo.html last;
+}
+```
+
+
+### next build && next export 后, out目录下存在index.html的同时还存在index/index.html
+解决办法:
+去除 pages/index/index.tsx, 保留 index.js 即可;
+同时为避免歧义, 将 pages/index/index.module.scss 变更名为 pages/home/index.module.scss
+
+
+
+### next build && next export 动态路由时, 提示异常 Error: Export encountered errors on following paths
+
+eg: 
+```
+> Build error occurred
+Error: Export encountered errors on following paths:
+        /profile/[id]: /profile/1
+        /profile/[id]: /profile/2
+        /profile/[id]: /profile/3
+```
+
+解决办法:
+先执行 next dev, 保持服务器运行状态, 再执行 next build && next export;
+
+原因:
+这是因为在dev模式下, 会自动启动一个本地的服务, 端口号默认是3000;
+而动态路由, 会根据dev模式下的接口数据生成多个页面, 例如: /profile/1, /profile/2, /profile/3;
+不启动dev模式, 会导致动态路由无法生成多个页面, 从而导致异常;
+
+
+### next dev 下, http请求会执行2次

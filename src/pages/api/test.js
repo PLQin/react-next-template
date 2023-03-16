@@ -4,8 +4,7 @@ export default function handler(req, res) {
     let data = { id }
     switch (id) {
       case '1':
-        data.name =
-          'Tom'
+        data.name = 'Tom'
         data.age = 21
         data.favorite = 'reading,sport'
         break

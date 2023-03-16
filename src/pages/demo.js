@@ -1,7 +1,7 @@
 import Demo from './demo/index.tsx'
 
-function App() {
+function DemoPage() {
   return <Demo />
 }
 
-export default App
+export default DemoPage

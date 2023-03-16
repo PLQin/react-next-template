@@ -4,10 +4,11 @@ import Image from 'next/image'
 import Nav from '@/components/nav'
 import { Inter } from 'next/font/google'
 import styles from './index.module.scss'
+import React, { useEffect, useState } from "react";
 
 const inter = Inter({ subsets: ['latin'] })
 
-export const getStaticProps = async () => {
+export const getStaticProps = async (context:any) => {
   const res = await axios({
     method: 'get',
     url: 'https://6702f219-422b-4b39-8c17-0eff2c60daa8.mock.pstmn.io/api/v1/social/token?sym=FUT',
@@ -20,9 +21,6 @@ export const getStaticProps = async () => {
     }
   })
 
-  console.log(res);
-  debugger
-
   return {
     props: {
       datum: res.data
@@ -33,8 +31,18 @@ export const getStaticProps = async () => {
 export default function App(props: { datum: any }) {
 
   const { datum } = props;
+  const [list, setList] = useState([]);
 
-  console.log('datum', datum);
+  useEffect(() => {
+    const getData = async () => {
+      const res = await axios({
+        method: 'get',
+        url: 'http://localhost:3000/api/test',
+      })
+      setList(res.data)
+    };
+    getData();
+  }, []);
 
   return (
     <>
@@ -46,6 +54,14 @@ export default function App(props: { datum: any }) {
       </Head>
       <main className={styles.main} style={{ "color": styles.primaryColor }}>
         <Nav />
+        {
+          (() => {
+            return <pre>
+              {JSON.stringify(datum)}
+            </pre>
+          })()
+        }
+        {JSON.stringify(datum)}
         <div >
           <p>
             Get started by editing&nbsp;
