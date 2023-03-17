@@ -8,23 +8,17 @@ const nextConfig = {
     includePaths: [path.join(__dirname, 'src/styles')],
   },
   trailingSlash: true,
-  // exportPathMap: async function (
-  //   defaultPathMap,
-  //   { dev, dir, outDir, distDir, buildId }
-  // ) {
-  //   return {
-  //     '/': { page: '/' },
-  //     '/demo/index': { page: '/demo' },
-  //     '/p/hello-nextjs': { page: '/post', query: { title: 'hello-nextjs' } },
-  //     '/p/learn-nextjs': { page: '/post', query: { title: 'learn-nextjs' } },
-  //     '/p/deploy-nextjs': { page: '/post', query: { title: 'deploy-nextjs' } },
-  //   }
-  // },
   images: {
     unoptimized: true,
   },
-  basePath: process.env.NODE_ENV === 'production' ? '' : '',
-  // productionBrowserSourceMaps: process.env.NODE_ENV === 'production' ? false : true,
+}
+
+if (process.env.BASE_PATH) {
+  nextConfig.basePath = process.env.BASE_PATH
+} else {
+  // /app is the default base path for the app
+  // 这里是为了解决在实际开发时，nextjs的 basepath 并不为 /app 的问题
+  nextConfig.basePath = process.env.NODE_ENV === 'production' ? '' : ''
 }
 
 module.exports = nextConfig

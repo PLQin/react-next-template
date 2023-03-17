@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "ssg": "next build && next export",
+    "customBuild": "cross-env BASE_PATH=$npm_config_base next build && next export -o $npm_config_out",
     "start": "next start",
     "lint": "next lint"
   },
@@ -19,6 +20,7 @@
     "@types/node": "18.15.3",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
+    "cross-env": "^7.0.3",
     "eslint": "8.36.0",
     "eslint-config-next": "13.2.4",
     "sass": "^1.59.3",

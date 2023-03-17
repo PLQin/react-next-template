@@ -138,4 +138,10 @@ Error: Export encountered errors on following paths:
 不启动dev模式, 会导致动态路由无法生成多个页面, 从而导致异常;
 
 
+### SSG模式下, 404页面无法访问
+在dev和SSR模式下，如果访问一个不存在的地址，是可以自动显示404页面的。
+
+但在SSG模式下，404页 面被静态化成了 404.html，访问一个不存在的地址并不会自动跳转至404.html。需要结合Apache或 者Nginx的配置来实现。
+
+
 ### next dev 下, http请求会执行2次
