@@ -31,8 +31,8 @@ export const getStaticProps = async (context:any) => {
 export default function App(props: { datum: any }) {
 
   const { datum } = props;
-  const [list, setList] = useState([]);
 
+  const [list, setList] = useState([]);
   useEffect(() => {
     const getData = async () => {
       const res = await axios({

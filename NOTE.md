@@ -3,6 +3,9 @@
 看了就会的Next.js SSR/SSG实战教程 - 掘金
 https://juejin.cn/post/7133395475675217933
 
+A Next.js site using new SSG support with a Notion backed blog - GitHub
+https://github.com/ijjk/notion-blog
+
 
 ### 以SSR模式运行项目
 执行以下命令，build项目：
