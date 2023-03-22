@@ -37,12 +37,12 @@
   先安装cross-env这个插件，用来統一跨平台的环境变量写法。  
   Window:
   ```
-    "customBuild": "cross-env BASE_PATH=%npm_config_base% next build && next export -o %npm_config_out%",
+"customBuild": "cross-env BASE_PATH=%npm_config_base% next build && next export -o %npm_config_out%",
   ```
 
   MacOS:
   ```
-    "customBuild": "cross-env BASE_PATH=$npm_config_base next build && next export -o $npm_config_out%",
+"customBuild": "cross-env BASE_PATH=$npm_config_base next build && next export -o $npm_config_out%",
   ```
 
   Windows系统接收传参的格式是 `npm_config_***%`
