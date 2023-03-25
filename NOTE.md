@@ -147,4 +147,21 @@ Error: Export encountered errors on following paths:
 但在SSG模式下，404页 面被静态化成了 404.html，访问一个不存在的地址并不会自动跳转至404.html。需要结合Apache或 者Nginx的配置来实现。
 
 
-### next dev 下, http请求会执行2次
+### next dev 下, 代码会执行2次
+参考: https://juejin.cn/post/7096401845693710367
+据了解疑似是React 18 中的 StrictMode 引起的, 但是目前还没有官方的解释, 也没有官方的解决方案, 但是可以通过以下方式解决:
+```
+// next.config.js
+  module.exports = {
+-   reactStrictMode: true,
+  }
+```
+
+`reactStrictMode` 是 Next.js 中的一个配置选项，用于启用 React 的严格模式。严格模式是 React 提供的一种调试工具，可以帮助开发者发现一些潜在的问题。启用严格模式会在控制台输出一些额外的警告信息，例如：
+
+- 检测到使用过时的生命周期方法。
+- 检测到使用废弃的 API。
+- 检测到一些不安全的操作，例如使用 `setState` 修改未挂载的组件。
+
+在 Next.js 中启用 `reactStrictMode` 可以帮助我们更早地发现这些问题，从而提高代码质量和可维护性。
+
